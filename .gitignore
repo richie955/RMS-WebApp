@@ -1,0 +1,21 @@
+# Ignore Node.js dependencies
+rms-frontend/node_modules/
+rms-frontend/.next/
+rms-frontend/.env.local
+
+# Ignore Python/Django dependencies
+rms-backend/venv/
+rms-backend/__pycache__/
+rms-backend/db.sqlite3
+rms-backend/.env
+
+# Ignore IDE and OS files
+.vscode/
+.idea/
+.DS_Store
+
+
+# Ignore compiled Python files
+__pycache__/
+*.pyc
+*.pyo
