@@ -20,3 +20,5 @@ urlpatterns = [
     path('', include(router.urls)),
     path('api/menuitems/bulk_create/', MenuItemViewSet.as_view({'post': 'bulk_create'})),
 ]
+
+
