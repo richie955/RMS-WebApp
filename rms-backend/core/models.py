@@ -1,43 +1,61 @@
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
 
-class CustomUser(AbstractUser):
+
+class UserManager(BaseUserManager):
+    def create_user(self, email, name, password=None, role='waiter', shift='morning', **extra_fields):
+        if not email:
+            raise ValueError("The Email field is required")
+
+        email = self.normalize_email(email)
+        user = self.model(email=email, name=name, role=role, shift=shift, **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, email, name, password=None, **extra_fields):
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', True)
+        return self.create_user(email, name, password, role='manager', **extra_fields)
+
+class User(AbstractBaseUser, PermissionsMixin):
+    MANAGER = 'manager'
+    WAITER = 'waiter'
+    COOK = 'cook'
+
     ROLE_CHOICES = [
-        ('Admin', 'Admin'),
-        ('Staff', 'Staff'),
+        (MANAGER, 'Manager'),
+        (WAITER, 'Waiter'),
+        (COOK, 'Cook'),
     ]
-    role = models.CharField(max_length=10, choices=ROLE_CHOICES)
 
-    # Avoid conflicts with Django's built-in User model
-    groups = models.ManyToManyField(
-        "auth.Group",
-        related_name="customuser_groups",
-        blank=True
-    )
-    user_permissions = models.ManyToManyField(
-        "auth.Permission",
-        related_name="customuser_permissions",
-        blank=True
-    )
+    MORNING = 'morning'
+    EVENING = 'evening'
+    NIGHT = 'night'
 
-
-# Admin model (Manager)
-class Admin(models.Model):
-    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, limit_choices_to={'role': 'Admin'})
-    name = models.CharField(max_length=100)
-
-# Staff model (Chef, Waiter only)
-class Staff(models.Model):
-    TYPE_CHOICES = [
-        ('Chef', 'Chef'),
-        ('Waiter', 'Waiter'),
+    SHIFT_CHOICES = [
+        (MORNING, 'Morning'),
+        (EVENING, 'Evening'),
+        (NIGHT, 'Night'),
     ]
-    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, limit_choices_to={'role': 'Staff'})
-    type = models.CharField(max_length=50, choices=TYPE_CHOICES)
-    shift = models.CharField(max_length=50)
-    name = models.CharField(max_length=100)
 
-# Menu Item model
+    email = models.EmailField(unique=True)
+    name = models.CharField(max_length=255)
+    role = models.CharField(max_length=20, choices=ROLE_CHOICES)
+    shift = models.CharField(max_length=20, choices=SHIFT_CHOICES)
+
+    is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
+
+    objects = UserManager()
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['name']
+
+    def __str__(self):
+        return f"{self.name} ({self.role})"
+
+
 class MenuItem(models.Model):
     CATEGORY_CHOICES = [
         ('Starter', 'Starter'),
