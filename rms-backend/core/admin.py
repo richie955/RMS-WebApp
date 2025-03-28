@@ -1,7 +1,24 @@
 from django.contrib import admin
-from .models import MenuItem, Table, Order, Bill, TransactionHistory, InventoryItem
+from .models import CustomUser, Admin, Staff, MenuItem, Table, Order, Bill, TransactionHistory, InventoryItem
 
+# Custom admin for better display
 
+@admin.register(CustomUser)
+class CustomUserAdmin(admin.ModelAdmin):
+    list_display = ('id', 'username', 'role', 'email', 'is_staff', 'is_active')
+    search_fields = ('username', 'email', 'role')
+    list_filter = ('role', 'is_staff', 'is_active')
+
+@admin.register(Admin)
+class AdminAdmin(admin.ModelAdmin):
+    list_display = ('id', 'user', 'name')
+    search_fields = ('name',)
+
+@admin.register(Staff)
+class StaffAdmin(admin.ModelAdmin):
+    list_display = ('id', 'user', 'name', 'type', 'shift')
+    search_fields = ('name', 'type')
+    list_filter = ('type', 'shift')
 
 @admin.register(MenuItem)
 class MenuItemAdmin(admin.ModelAdmin):

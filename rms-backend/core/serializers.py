@@ -1,50 +1,20 @@
 from rest_framework import serializers
-from .models import User, MenuItem, Table, Order, Bill, TransactionHistory, InventoryItem
+from .models import CustomUser, Admin, Staff, MenuItem, Table, Order, Bill, TransactionHistory, InventoryItem
 
-from rest_framework import serializers
-from django.contrib.auth import get_user_model, authenticate
-
-User = get_user_model()
-
-# User Sign-Up Serializer
-class UserSignUpSerializer(serializers.ModelSerializer):
+class CustomUserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = User
-        fields = ['name', 'email', 'password', 'role', 'shift']
+        model = CustomUser
+        fields = ['id', 'username', 'role']
 
-    def create(self, validated_data):
-        user = User.objects.create_user(**validated_data)  # Uses Django's create_user()
-        return user
-
-# User Sign-In Serializer
-class UserSignInSerializer(serializers.Serializer):
-    email = serializers.EmailField()
-    password = serializers.CharField(write_only=True)
-
-    def validate(self, data):
-        email = data.get('email')
-        password = data.get('password')
-        user = authenticate(email=email, password=password)
-
-        if not user:
-            raise serializers.ValidationError("Invalid credentials")
-        return user
-
-
-
-class UserSerializer(serializers.ModelSerializer):
+class AdminSerializer(serializers.ModelSerializer):
     class Meta:
-        model = User
-        fields = ['id', 'username', 'name', 'email', 'role', 'shift']
-        extra_kwargs = {
-            'password': {'write_only': True}
-        }
+        model = Admin
+        fields = '__all__'
 
-    def create(self, validated_data):
-        # Use create_user to hash the password
-        user = User.objects.create_user(**validated_data)
-        return user
-
+class StaffSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Staff
+        fields = '__all__'
 
 class BulkMenuItemSerializer(serializers.ListSerializer):
     def create(self, validated_data):

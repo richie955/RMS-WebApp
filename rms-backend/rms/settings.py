@@ -53,8 +53,6 @@ INSTALLED_APPS = [
 #     ],
 # }
 
-LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = '/login/'
 
 
 MIDDLEWARE = [
@@ -78,7 +76,6 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True 
-CORS_ALLOW_CREDENTIALS = True
 
 ROOT_URLCONF = 'rms.urls'
 
@@ -99,8 +96,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'rms.wsgi.application'
-AUTH_USER_MODEL = 'core.User'
-
 
 
 # Database
