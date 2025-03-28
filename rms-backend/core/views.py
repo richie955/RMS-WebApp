@@ -74,6 +74,9 @@ class SignInView(APIView):
         if serializer.is_valid():
             user = serializer.validated_data
             login(request, user)  # Create session
-            return Response({"message": "Login successful"}, status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+            # Serialize and return full user details
+            user_data = UserSerializer(user).data
+            return Response({"message": "Login successful", "user": user_data}, status=status.HTTP_200_OK)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
