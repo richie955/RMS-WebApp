@@ -50,7 +50,7 @@ const Sidebar = () => {
   };
 
   return (
-    <aside className="w-72 bg-gradient-to-b   border-white from-gray-900 to-gray-800 text-white p-6 flex flex-col gap-8 min-h-screen shadow-xl ">
+    <aside className="w-[400px] bg-gradient-to-b   border-white from-gray-900 to-gray-800 text-white p-6 flex flex-col gap-8 min-h-screen shadow-xl ">
       {/* User Info */}
       <div className="p-6 rounded-2xl bg-gray-700 shadow-lg animate-fade-in">
         <h2 className="text-3xl font-bold mb-3">👤 {name}</h2>

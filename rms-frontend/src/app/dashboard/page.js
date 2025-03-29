@@ -17,7 +17,6 @@ const Dashboard = () => {
 
   return (
    <div className="flex bg-gray-800">
-     <Sidebar/>
      <div className="flex-1">
     
     <nav className="bg-gray-900 text-white p-4 flex justify-between">
@@ -43,17 +42,17 @@ const Dashboard = () => {
       <a href="/tables" className="bg-gray-900 text-white py-4 rounded font-semibold">🍽️ View Tables</a>
       <a href="/inventory" className="bg-gray-900 text-white py-4 rounded font-semibold">📦 View Inventory</a>
       <a href="/menu" className="bg-gray-900 text-white py-4 rounded font-semibold">📖 View Menu</a>
+      <a href="/orders/add" className="bg-gray-900 text-white py-4 rounded font-semibold">➕ Add Order</a>
 
       {/* Admin-Only Features */}
       {isAdmin && (
         <>
-          <a href="/orders/add" className="bg-gray-900 text-white py-4 rounded font-semibold">➕ Add Order</a>
+       
           <a href="/menu/add" className="bg-gray-900 text-white py-4 rounded font-semibold">🍔 Add Menu Item</a>
-          <a href="/menu" className="bg-gray-900 text-white py-4 rounded font-semibold">🍔 View Menu </a>
           <a href="/inventory/add" className="bg-gray-900 text-white py-4 rounded font-semibold">📥Manage Inventory</a>
           <a href="/tables/add" className="bg-gray-900 text-white py-4 rounded font-semibold">➕ Manage Tables</a>
           <a href="/staff" className="bg-gray-900 text-white py-4 rounded font-semibold">👥 Manage Staff</a>
-          <a href="/bill" className="bg-gray-900 text-white py-4 rounded font-semibold">🧾 Generate Bill</a>
+          <a href="/orders" className="bg-gray-900 text-white py-4 rounded font-semibold">🧾 Generate Bill</a>
           <a href="/transactions" className="bg-gray-900 text-white py-4 rounded font-semibold">💳 Transaction History</a>
         </>
       )}

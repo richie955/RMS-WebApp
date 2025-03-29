@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import User, MenuItem, Table, Order, Bill, TransactionHistory, InventoryItem
-
+from .models import OrderItem
 from rest_framework import serializers
 from django.contrib.auth import get_user_model, authenticate
 
@@ -44,8 +44,10 @@ class UserSerializer(serializers.ModelSerializer):
         # Use create_user to hash the password
         user = User.objects.create_user(**validated_data)
         return user
+    
 
-
+        
+        
 class BulkMenuItemSerializer(serializers.ListSerializer):
     def create(self, validated_data):
         return MenuItem.objects.bulk_create([MenuItem(**item) for item in validated_data])
@@ -61,16 +63,54 @@ class TableSerializer(serializers.ModelSerializer):
         model = Table
         fields = '__all__'
 
+
+from rest_framework import serializers
+from .models import Order, OrderItem, Table, MenuItem
+
+from rest_framework import serializers
+from .models import Order, OrderItem, MenuItem, Table
+
+class OrderItemSerializer(serializers.ModelSerializer):
+    menu_item_name = serializers.CharField(source='menu_item.name', read_only=True)
+    menu_item = serializers.PrimaryKeyRelatedField(queryset=MenuItem.objects.all())
+    price = serializers.CharField(source='menu_item.price', read_only=True)
+    
+    class Meta:
+        model = OrderItem
+        fields = ['id', 'menu_item', 'quantity', 'menu_item_name','price']
+
 class OrderSerializer(serializers.ModelSerializer):
+    order_items = OrderItemSerializer(many=True)
+    tables = serializers.PrimaryKeyRelatedField(queryset=Table.objects.all(), many=True)
+
     class Meta:
         model = Order
-        fields = '__all__'
+        fields = ['id', 'tables', 'status', 'order_items', 'created_at']
+
+    def create(self, validated_data):
+        # Extract order items and tables
+        order_items_data = validated_data.pop('order_items')
+        tables_data = validated_data.pop('tables')
+
+        # Create the order
+        order = Order.objects.create(**validated_data)
+
+        # Associate tables
+        order.tables.set(tables_data)
+
+        # Create OrderItems with correct menu_item handling
+        for item_data in order_items_data:
+            menu_item = item_data.pop('menu_item')
+            OrderItem.objects.create(order=order, menu_item=menu_item, **item_data)
+
+        return order
 
 class BillSerializer(serializers.ModelSerializer):
     class Meta:
         model = Bill
-        fields = '__all__'
-
+        fields = ["id", "order", "total_amount", "is_paid"]
+        
+    
 class TransactionHistorySerializer(serializers.ModelSerializer):
     class Meta:
         model = TransactionHistory

@@ -84,15 +84,42 @@ class Table(models.Model):
     def __str__(self):
         return f"Table {self.number}, Capacity:{self.capacity}"
 
-# Order model
+
+class OrderItem(models.Model):
+    order = models.ForeignKey('Order', on_delete=models.CASCADE, related_name='order_items')
+    menu_item = models.ForeignKey(MenuItem, on_delete=models.PROTECT) 
+    quantity = models.PositiveIntegerField(default=1)
+
+    def __str__(self):
+        return f"{self.menu_item.name} (x{self.quantity})"
+
 class Order(models.Model):
-    menu_items = models.ManyToManyField(MenuItem)
-    tables = models.ManyToManyField(Table)
-    status = models.CharField(max_length=20, choices=[('Pending', 'Pending'), ('Completed', 'Completed')], default='Pending')
+    menu_items = models.ManyToManyField(MenuItem, through=OrderItem)  # Custom through model
+    tables = models.ManyToManyField(Table)  # Default auto-created through table
+    status = models.CharField(
+        max_length=20,
+        choices=[('Pending', 'Pending'), ('Completed', 'Completed')],
+        default='Pending'
+    )
     created_at = models.DateTimeField(auto_now_add=True)
 
+    def delete(self, *args, **kwargs):
+        # Delete all related OrderItem entries (Order-MenuItem link)
+        self.orderitem_set.all().delete()
+
+        # Clear the Order-Tables relationship (Many-to-Many link)
+        self.tables.clear()
+
+        # Proceed to delete the Order itself
+        super().delete(*args, **kwargs)
+
+    def __str__(self):
+        return f"Order #{self.id} - {self.status}"
+
+    
 # Bill model
 class Bill(models.Model):
+    is_paid=models.BooleanField(default=True)
     order = models.OneToOneField(Order, on_delete=models.CASCADE)
     total_amount = models.DecimalField(max_digits=10, decimal_places=2)
     generated_at = models.DateTimeField(auto_now_add=True)
