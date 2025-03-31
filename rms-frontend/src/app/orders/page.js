@@ -14,8 +14,8 @@ const OrderCard = ({ order, onUpdateStatus, onGenerateBill }) => {
   };
 
   return (
-    <div className="p-6 bg-white rounded-lg shadow-md border hover:shadow-lg transition-shadow duration-300">
-      <h3 className="text-xl font-semibold text-gray-800 mb-2">Order #{id}</h3>
+    <div className="p-4 bg-white rounded-3xl shadow-md hover:shadow-lg transition-shadow duration-300">
+      <h3 className="text-xl font-bold text-gray-800 mb-2">Order {id}</h3>
 
       <p className="text-gray-600">
         <span className="font-semibold">Status:</span> {status}
@@ -47,7 +47,7 @@ const OrderCard = ({ order, onUpdateStatus, onGenerateBill }) => {
       {/* Toggle Status Button */}
       <button
         onClick={toggleStatus}
-        className={`mt-4 px-4 py-2 rounded ${
+        className={`mt-4 px-4 py-2 rounded-2xl ${
           status === "Pending"
             ? "bg-green-500 hover:bg-green-600"
             : "bg-yellow-500 hover:bg-yellow-600"
@@ -60,7 +60,7 @@ const OrderCard = ({ order, onUpdateStatus, onGenerateBill }) => {
       {status === "Completed" && (
         <button
           onClick={() => onGenerateBill(id)}
-          className="mt-4 ml-4 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded"
+          className="mt-4 ml-4 px-4 py-2 bg-gray-800 hover:bg-gray-900 text-white rounded-2xl"
         >
           🧾 Generate Bill
         </button>
@@ -127,21 +127,22 @@ const OrderPage = () => {
   }, []);
 
   return (
-    <div className="p-8 bg-gray-100 min-h-screen">
+    <div className="min-h-screen flex rounded-tl-3xl  justify-center items-center  bg-blue-200  px-8 p-4 pt-0">
+    <div className="w-full  border-gray-300 -mt-12">
       <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold">Order Management</h1>
+        <h1 className="text-4xl font-bold text-gray-800">🍽 Order Management</h1>
         <button
           onClick={goToAddOrder}
-          className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
+          className="bg-gray-900 hover:bg-gray-800 text-white px-6 py-3 rounded-lg shadow-lg font-medium transition-all duration-300"
         >
           ➕ Add Order
         </button>
       </div>
 
       {orders.length === 0 ? (
-        <p className="text-center text-gray-600">No orders available.</p>
+        <p className="text-center text-gray-700 text-lg">No orders available.</p>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        <div className="flex flex-wrap justify-between gap-y-10 gap-6">
           {orders.map((order) => (
             <OrderCard
               key={order.id}
@@ -153,6 +154,8 @@ const OrderPage = () => {
         </div>
       )}
     </div>
+  </div>
+
   );
 };
 

@@ -18,7 +18,6 @@ export default function MenuAddPage() {
   // Handle form input change
   const handleChange = (e) => {
     const { name, value, type, checked, files } = e.target;
-
     setFormData((prev) => ({
       ...prev,
       [name]: type === "checkbox" ? checked : files ? files[0] : value,
@@ -59,20 +58,18 @@ export default function MenuAddPage() {
   };
 
   return (
-    <div className="p-8 min-h-screen bg-[#FAF9F6] flex flex-col items-center">
-      <h1 className="text-4xl font-bold text-[#4A4A4A] mb-8">Add Menu Item</h1>
+    <div className="p-8 min-h-screen rounded-tl-3xl bg-blue-100 flex flex-col items-center">
+      <h1 className="text-3xl font-bold text-gray-700 mb-6">Add Menu Item</h1>
 
-      {message && (
-        <p className="mb-6 text-lg font-semibold text-[#8B4513]">{message}</p>
-      )}
+      {message && <p className="mb-4 text-lg font-semibold text-red-600">{message}</p>}
 
       <form
         onSubmit={handleSubmit}
-        className="w-full max-w-lg bg-white shadow-xl rounded-lg p-8"
+        className="w-full max-w-md bg-white shadow-md  text-sm rounded-lg p-6"
       >
         {/* Name */}
-        <label className="block mb-4">
-          <span className="text-[#8B4513] font-medium">Name:</span>
+        <label className="block mb-3">
+          <span className="text-gray-700 font-medium">Name:</span>
           <input
             type="text"
             name="name"
@@ -80,25 +77,25 @@ export default function MenuAddPage() {
             onChange={handleChange}
             required
             placeholder="Enter item name"
-            className="mt-2 p-3 w-full border rounded-md focus:outline-none focus:ring-2 focus:ring-[#8B4513]"
+            className="mt-2 p-2 w-full border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </label>
 
         {/* Description */}
-        <label className="block mb-4">
-          <span className="text-[#8B4513] font-medium">Description:</span>
+        <label className="block mb-3">
+          <span className="text-gray-700 font-medium">Description:</span>
           <textarea
             name="description"
             value={formData.description}
             onChange={handleChange}
             placeholder="Optional: Add a short description"
-            className="mt-2 p-3 w-full border rounded-md focus:outline-none focus:ring-2 focus:ring-[#8B4513]"
+            className="mt-2 p-2 w-full border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </label>
 
         {/* Price */}
-        <label className="block mb-4">
-          <span className="text-[#8B4513] font-medium">Price (₹):</span>
+        <label className="block mb-3">
+          <span className="text-gray-700 font-medium">Price (₹):</span>
           <input
             type="number"
             name="price"
@@ -107,19 +104,19 @@ export default function MenuAddPage() {
             required
             placeholder="Enter price"
             step="0.01"
-            className="mt-2 p-3 w-full border rounded-md focus:outline-none focus:ring-2 focus:ring-[#8B4513]"
+            className="mt-2 p-2 w-full border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </label>
 
-        {/* Category (Dropdown) */}
-        <label className="block mb-4">
-          <span className="text-[#8B4513] font-medium">Category:</span>
+        {/* Category */}
+        <label className="block mb-3">
+          <span className="text-gray-700 font-medium">Category:</span>
           <select
             name="category"
             value={formData.category}
             onChange={handleChange}
             required
-            className="mt-2 p-3 w-full border rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-[#8B4513]"
+            className="mt-2 p-2 w-full border rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             <option value="">Select Category</option>
             {categories.map((cat) => (
@@ -131,20 +128,20 @@ export default function MenuAddPage() {
         </label>
 
         {/* Availability */}
-        <label className="flex items-center mb-4">
+        <label className="flex items-center mb-3">
           <input
             type="checkbox"
             name="available"
             checked={formData.available}
             onChange={handleChange}
-            className="h-5 w-5 text-[#8B4513] focus:ring-[#8B4513]"
+            className="h-5 w-5 text-blue-500 focus:ring-blue-500"
           />
-          <span className="ml-2 text-[#8B4513] font-medium">Available</span>
+          <span className="ml-2 text-gray-700 font-medium">Available</span>
         </label>
 
         {/* Image Upload */}
-        <label className="block mb-6">
-          <span className="text-[#8B4513] font-medium">Upload Image:</span>
+        <label className="block mb-4">
+          <span className="text-gray-700 font-medium">Upload Image:</span>
           <input
             type="file"
             name="menuitem_image"
@@ -156,7 +153,7 @@ export default function MenuAddPage() {
 
         <button
           type="submit"
-          className="w-full bg-[#8B4513] text-white p-3 rounded-lg font-semibold hover:bg-[#A0522D] transition-all duration-300"
+          className="w-full bg-blue-600 text-white p-2 rounded-lg font-semibold hover:bg-blue-700 transition-all duration-300"
         >
           Add Menu Item
         </button>

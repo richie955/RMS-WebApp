@@ -102,20 +102,26 @@ export default function TableManagePage() {
   };
 
   return (
-    <div className="p-8 min-h-screen bg-[#FAF9F6] flex flex-col items-center">
-      <h1 className="text-4xl font-bold text-[#4A4A4A] mb-8">Manage Tables</h1>
+    <div className="min-h-screen rounded-tl-3xl flex flex-col justify-center items-center p-4 bg-blue-100">
+ 
+      
 
+      <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">Manage Tables</h1>
+
+      {/* Success/Error Message */}
       {message && (
-        <p className="mb-6 text-lg font-semibold text-[#8B4513]">{message}</p>
+        <p className="mb-4 text-lg font-semibold text-green-700 bg-green-100 px-4 py-2 rounded-lg text-center">
+          {message}
+        </p>
       )}
 
-      {/* Table Form */}
+      {/* Form Section */}
       <form
         onSubmit={handleSubmit}
-        className="w-full max-w-lg bg-white shadow-xl rounded-lg p-8 mb-8"
+        className=" w-[300px] mx-auto text-sm bg-white shadow-lg rounded-xl p-6 border border-gray-200"
       >
         <label className="block mb-4">
-          <span className="text-[#8B4513] font-medium">Table Number:</span>
+          <span className="text-gray-700 font-semibold">Table Number:</span>
           <input
             type="number"
             name="number"
@@ -123,12 +129,12 @@ export default function TableManagePage() {
             onChange={handleChange}
             required
             placeholder="Enter table number"
-            className="mt-2 p-3 w-full border rounded-md focus:outline-none focus:ring-2 focus:ring-[#8B4513]"
+            className="mt-2 p-3 w-full border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900"
           />
         </label>
 
         <label className="block mb-4">
-          <span className="text-[#8B4513] font-medium">Capacity:</span>
+          <span className="text-gray-700 font-semibold">Capacity:</span>
           <input
             type="number"
             name="capacity"
@@ -136,11 +142,11 @@ export default function TableManagePage() {
             onChange={handleChange}
             required
             placeholder="Enter seating capacity"
-            className="mt-2 p-3 w-full border rounded-md focus:outline-none focus:ring-2 focus:ring-[#8B4513]"
+            className="mt-2 p-3 w-full border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900"
           />
         </label>
 
-        <label className="block mb-4">
+        <label className="flex items-center mb-4">
           <input
             type="checkbox"
             name="reserved"
@@ -148,12 +154,12 @@ export default function TableManagePage() {
             onChange={handleChange}
             className="mr-2"
           />
-          <span className="text-[#8B4513] font-medium">Reserved</span>
+          <span className="text-gray-700 font-semibold">Reserved</span>
         </label>
 
         <button
           type="submit"
-          className="w-full bg-[#8B4513] text-white p-3 rounded-lg font-semibold hover:bg-[#A0522D] transition-all duration-300"
+          className="w-full bg-gray-800 text-white p-3 rounded-lg font-semibold hover:bg-gray-900 transition-all duration-300"
         >
           {selectedTable ? "Update Table" : "Add Table"}
         </button>
@@ -162,40 +168,46 @@ export default function TableManagePage() {
           <button
             type="button"
             onClick={resetForm}
-            className="mt-4 w-full text-[#8B4513] underline"
+            className="mt-4 w-full text-red-600 font-medium underline"
           >
             Cancel Edit
           </button>
         )}
       </form>
 
-      {/* Table List */}
-      <div className="w-full max-w-3xl">
-        <h2 className="text-2xl font-bold text-[#4A4A4A] mb-4">Tables</h2>
-        <ul className="space-y-4">
-          {tables.map((table) => (
-            <li
-              key={table.id}
-              className="flex justify-between items-center p-4 bg-white shadow-sm rounded-lg"
-            >
-              <div>
-                <p className="text-lg font-medium text-[#4A4A4A]">
-                  Table #{table.number}
-                </p>
-                <p className="text-sm text-gray-600">
-                  Capacity: {table.capacity} | Reserved: {table.reserved ? "Yes" : "No"}
-                </p>
-              </div>
-              <button
-                onClick={() => handleEdit(table)}
-                className="bg-[#8B4513] text-white px-4 py-2 rounded-lg hover:bg-[#A0522D]"
+      {/* Tables Section - Aligned Below Form */}
+      <div className="mt-10 w-full max-w-4xl mx-auto">
+        <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">Tables</h2>
+        
+        {tables.length === 0 ? (
+          <p className="text-center text-gray-500 text-lg">No tables added yet.</p>
+        ) : (
+          <ul className="space-y-4">
+            {tables.map((table) => (
+              <li
+                key={table.id}
+                className="flex justify-between items-center p-4 bg-gray-100 shadow-md rounded-lg border border-gray-300"
               >
-                Edit
-              </button>
-            </li>
-          ))}
-        </ul>
-      </div>
+                <div>
+                  <p className="text-lg font-semibold text-gray-800">Table #{table.number}</p>
+                  <p className="text-sm text-gray-600">
+                    Capacity: {table.capacity} | Reserved: {table.reserved ? "Yes" : "No"}
+                  </p>
+                </div>
+                <button
+                  onClick={() => handleEdit(table)}
+                  className="bg-gray-800 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-700"
+                >
+                  Edit
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
+
+      
     </div>
+   </div>
+
   );
 }

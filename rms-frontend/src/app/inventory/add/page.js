@@ -91,87 +91,83 @@ export default function InventoryManagePage() {
   };
 
   return (
-    <div className="p-8 min-h-screen bg-[#FAF9F6] flex flex-col items-center">
-      <h1 className="text-4xl font-bold text-[#4A4A4A] mb-8">Manage Inventory</h1>
+    <div className="min-h-screen  rounded-tl-3xl flex-col flex items-center py-12 justify-center bg-blue-100">
+      <div className=" w-[300px] text-sm bg-white shadow-xl rounded-2xl p-8">
+        <h1 className="text-2xl font-bold text-gray-800 text-center mb-6">Manage Inventory</h1>
 
-      {message && (
-        <p className="mb-6 text-lg font-semibold text-[#8B4513]">{message}</p>
-      )}
-
-      {/* Inventory Form */}
-      <form
-        onSubmit={handleSubmit}
-        className="w-full max-w-lg bg-white shadow-xl rounded-lg p-8 mb-8"
-      >
-        <label className="block mb-4">
-          <span className="text-[#8B4513] font-medium">Item Name:</span>
-          <input
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            required
-            placeholder="Enter item name"
-            className="mt-2 p-3 w-full border rounded-md focus:outline-none focus:ring-2 focus:ring-[#8B4513]"
-          />
-        </label>
-
-        <label className="block mb-4">
-          <span className="text-[#8B4513] font-medium">Quantity:</span>
-          <input
-            type="number"
-            name="quantity"
-            value={formData.quantity}
-            onChange={handleChange}
-            required
-            placeholder="Enter quantity"
-            className="mt-2 p-3 w-full border rounded-md focus:outline-none focus:ring-2 focus:ring-[#8B4513]"
-          />
-        </label>
-
-        <button
-          type="submit"
-          className="w-full bg-[#8B4513] text-white p-3 rounded-lg font-semibold hover:bg-[#A0522D] transition-all duration-300"
-        >
-          {selectedItem ? "Update Item" : "Add Item"}
-        </button>
-
-        {selectedItem && (
-          <button
-            type="button"
-            onClick={resetForm}
-            className="mt-4 w-full text-[#8B4513] underline"
-          >
-            Cancel Edit
-          </button>
+        {message && (
+          <p className="mb-6 text-lg font-semibold text-center text-gray-800">{message}</p>
         )}
-      </form>
 
-      {/* Inventory List */}
-      <div className="w-full max-w-3xl">
-        <h2 className="text-2xl font-bold text-[#4A4A4A] mb-4">Inventory Items</h2>
-        <ul className="space-y-4">
+        {/* Inventory Form */}
+        <form onSubmit={handleSubmit} className="space-y-4 ">
+          <label className="block">
+            <span className="text-gray-800 font-medium">Item Name:</span>
+            <input
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              required
+              placeholder="Enter item name"
+              className="mt-2 p-3 w-full border rounded-md focus:outline-none focus:ring-2 focus:ring-[#8B4513]"
+            />
+          </label>
+
+          <label className="block">
+            <span className="text-gray-800 font-medium">Quantity:</span>
+            <input
+              type="number"
+              name="quantity"
+              value={formData.quantity}
+              onChange={handleChange}
+              required
+              placeholder="Enter quantity"
+              className="mt-2 p-3 w-full border rounded-md focus:outline-none focus:ring-2 focus:ring-[#8B4513]"
+            />
+          </label>
+
+          <button
+            type="submit"
+            className="w-full bg-gray-800 text-white p-3 rounded-lg font-semibold hover:bg-gray-900 transition-all duration-300"
+          >
+            {selectedItem ? "Update Item" : "Add Item"}
+          </button>
+
+          {selectedItem && (
+            <button
+              type="button"
+              onClick={resetForm}
+              className="mt-2 w-full text-gray-800 underline text-center"
+            >
+              Cancel Edit
+            </button>
+          )}
+        </form>
+        </div>
+
+        {/* Inventory List */}
+        <ul className="mt-6 space-y-4 w-full p-12">
           {inventory.map((item) => (
             <li
               key={item.id}
-              className="flex justify-between items-center p-4 bg-white shadow-sm rounded-lg"
+              className="flex justify-between items-center p-4 bg-gray-100 shadow-sm rounded-lg"
             >
               <div>
-                <p className="text-lg font-medium text-[#4A4A4A]">
-                  {item.name}
-                </p>
+                <p className="text-lg font-medium text-gray-800">{item.name}</p>
                 <p className="text-sm text-gray-600">Quantity: {item.quantity}</p>
               </div>
               <button
                 onClick={() => handleEdit(item)}
-                className="bg-[#8B4513] text-white px-4 py-2 rounded-lg hover:bg-[#A0522D]"
+                className="bg-gray-800 text-white px-4 py-2 rounded-lg hover:bg-gray-900"
               >
                 Edit
               </button>
             </li>
           ))}
         </ul>
-      </div>
-    </div>
+
+    </div>
+
   );
 }

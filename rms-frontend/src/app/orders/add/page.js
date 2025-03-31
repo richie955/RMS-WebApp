@@ -2,6 +2,13 @@
 
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
+import {
+  FaUtensils,
+  FaChair,
+  FaCheckCircle,
+  FaArrowLeft,
+} from "react-icons/fa";
 
 const AddOrderPage = () => {
   const router = useRouter();
@@ -13,13 +20,12 @@ const AddOrderPage = () => {
 
   const API_URL = "http://127.0.0.1:8000/api";
 
-  // Fetch menu items and tables from the backend
   useEffect(() => {
     const fetchData = async () => {
       try {
         const [menuRes, tableRes] = await Promise.all([
-          fetch(`${API_URL}/menuitems/`),
-          fetch(`${API_URL}/tables/`),
+          fetch(`${API_URL}/menuitems/`), // ✅ Fixed template literals
+          fetch(`${API_URL}/tables/`), // ✅ Fixed template literals
         ]);
 
         if (!menuRes.ok || !tableRes.ok) {
@@ -42,63 +48,52 @@ const AddOrderPage = () => {
     fetchData();
   }, []);
 
-  // Toggle menu item selection with quantity
   const toggleMenuItem = (id) => {
     setSelectedMenuItems((prev) => {
       const existingItem = prev.find((item) => item.menu_item === id);
-
-      if (existingItem) {
-        return prev.filter((item) => item.menu_item !== id); // Deselect item
-      } else {
-        return [...prev, { menu_item: id, quantity: 1 }]; // Add with default quantity
-      }
+      return existingItem
+        ? prev.filter((item) => item.menu_item !== id)
+        : [...prev, { menu_item: id, quantity: 1 }];
     });
   };
 
-  // Update quantity for selected menu item
   const updateQuantity = (id, quantity) => {
     setSelectedMenuItems((prev) =>
       prev.map((item) =>
-        item.menu_item === id ? { ...item, quantity: Math.max(1, quantity) } : item
+        item.menu_item === id
+          ? { ...item, quantity: Math.max(1, quantity) }
+          : item
       )
     );
   };
 
-  // Handle table selection
   const toggleTable = (id) => {
     setSelectedTables((prev) =>
       prev.includes(id) ? prev.filter((table) => table !== id) : [...prev, id]
     );
   };
 
-  // Submit new order to the backend
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (selectedMenuItems.length === 0 || selectedTables.length === 0) {
       alert("Please select at least one menu item and one table.");
       return;
     }
-
-    const newOrder = {
-      status: "Pending",
-      order_items: selectedMenuItems,
-      tables: selectedTables,
-    };
-
     try {
       const response = await fetch(`${API_URL}/orders/`, {
+        // ✅ Corrected
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newOrder),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          status: "Pending",
+          order_items: selectedMenuItems,
+          tables: selectedTables,
+        }),
       });
 
       if (!response.ok) throw new Error("Failed to create order");
-
       alert("Order successfully created!");
-      router.push("/orders"); // Redirect to orders page
+      router.push("/orders");
     } catch (error) {
       console.error("Error creating order:", error);
       alert("Error creating the order. Please try again.");
@@ -106,85 +101,92 @@ const AddOrderPage = () => {
   };
 
   return (
-    <div className="p-8 bg-gray-100 min-h-screen">
-      <h1 className="text-3xl font-bold mb-8">➕ Add New Order</h1>
+    <motion.div className="p-8 min-h-screen bg-blue-100 rounded-tl-3xl flex flex-col items-center">
+      <motion.h1 className="text-4xl font-extrabold text-gray-900 flex items-center gap-3">
+        <FaUtensils /> Add New Order
+      </motion.h1>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
-
-        {/* Menu Items Selection */}
-        <div>
-          <h2 className="text-xl font-semibold mb-4">Select Menu Items & Quantity:</h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            {menuItems.map((item) => {
-              const selectedItem = selectedMenuItems.find(
-                (selected) => selected.menu_item === item.id
-              );
-
-              return (
-                <div key={item.id} className="flex items-center space-x-3">
-                  <input
-                    type="checkbox"
-                    value={item.id}
-                    checked={!!selectedItem}
-                    onChange={() => toggleMenuItem(item.id)}
-                    className="form-checkbox h-5 w-5 text-blue-600"
-                  />
-                  <span>{item.name} (₹{item.price})</span>
-
-                  {/* Quantity Input (only when item is selected) */}
-                  {selectedItem && (
-                    <input
-                      type="number"
-                      min="1"
-                      value={selectedItem.quantity}
-                      onChange={(e) =>
-                        updateQuantity(item.id, parseInt(e.target.value, 10) || 1)
-                      }
-                      className="w-16 p-1 border rounded"
-                    />
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Table Selection */}
-        <div>
-          <h2 className="text-xl font-semibold mb-4">Select Tables:</h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            {tables.map((table) => (
-              <label key={table.id} className="flex items-center space-x-3">
+      <form
+        onSubmit={handleSubmit}
+        className="w-full l bg-white p-6 rounded-xl shadow-lg mt-6"
+      >
+        <h2 className="text-xl font-semibold mb-4">Select Menu Items:</h2>
+        <div className="grid grid-cols-2 gap-4">
+          {menuItems.map((item) => (
+            <motion.div
+              key={item.id}
+              whileHover={{ scale: 1.05 }}
+              className="flex items-center bg-gray-100 p-3 rounded-xl shadow"
+            >
+              <input
+                type="checkbox"
+                value={item.id}
+                checked={
+                  !!selectedMenuItems.find((i) => i.menu_item === item.id)
+                }
+                onChange={() => toggleMenuItem(item.id)}
+                className="h-5 w-5 text-red-600"
+              />
+              <span className="ml-3">
+                {item.name} (₹{item.price})
+              </span>
+              {selectedMenuItems.find((i) => i.menu_item === item.id) && (
                 <input
-                  type="checkbox"
-                  value={table.id}
-                  checked={selectedTables.includes(table.id)}
-                  onChange={() => toggleTable(table.id)}
-                  className="form-checkbox h-5 w-5 text-green-600"
+                  type="number"
+                  min="1"
+                  value={
+                    selectedMenuItems.find((i) => i.menu_item === item.id)
+                      ?.quantity
+                  }
+                  onChange={(e) =>
+                    updateQuantity(item.id, parseInt(e.target.value, 10) || 1)
+                  }
+                  className="ml-3 w-16 p-1 border rounded"
                 />
-                <span>Table #{table.id} (Capacity: {table.capacity})</span>
-              </label>
-            ))}
-          </div>
+              )}
+            </motion.div>
+          ))}
         </div>
 
-        {/* Submit Button */}
-        <button
+        <h2 className="text-xl font-semibold mt-6 mb-4">Select Tables:</h2>
+        <div className="grid grid-cols-2 gap-4">
+          {tables.map((table) => (
+            <motion.label
+              key={table.id}
+              whileHover={{ scale: 1.05 }}
+              className="flex items-center bg-gray-100 p-3 rounded-xl shadow cursor-pointer"
+            >
+              <input
+                type="checkbox"
+                value={table.id}
+                checked={selectedTables.includes(table.id)}
+                onChange={() => toggleTable(table.id)}
+                className="h-5 w-5 text-green-600"
+              />
+              <span className="ml-3 flex items-center gap-1">
+                <FaChair /> Table #{table.id} (Capacity: {table.capacity})
+              </span>
+            </motion.label>
+          ))}
+        </div>
+
+        <motion.button
+          whileHover={{ scale: 1.05 }}
           type="submit"
-          className="mt-4 bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded"
+          className="mt-6 w-full bg-gray-900 hover:bg-gray-900 text-white py-2 rounded flex items-center justify-center gap-2"
         >
-          ✅ Create Order
-        </button>
+          <FaCheckCircle /> Create Order
+        </motion.button>
       </form>
 
-      {/* Back to Orders Button */}
-      <button
+      <motion.button
+        whileHover={{ scale: 1.05 }}
         onClick={() => router.push("/orders")}
-        className="mt-6 text-gray-700 hover:underline"
+        className="mt-6 text-gray-800 hover:underline flex items-center gap-2"
       >
-        ⬅️ Back to Orders
-      </button>
-    </div>
+        <FaArrowLeft /> Back to Orders
+      </motion.button>
+    </motion.div>
   );
 };
 

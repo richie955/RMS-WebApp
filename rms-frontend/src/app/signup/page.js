@@ -43,7 +43,12 @@ export default function SignUp() {
 
 
   return (
-    <div className="flex items-center  justify-center min-h-screen bg-gradient-to-br from-purple-500 via-pink-200 to-blue-300">
+    <div>
+       
+
+      <div className="flex items-center  justify-center min-h-screen bg-gradient-to-br from-gray-800 to-gray-900">
+    
+
     <div className="w-full max-w-sm p-6 space-y-5 bg-white rounded-3xl shadow-xl border border-gray-200">
       <h2 className="text-3xl font-bold text-center text-gray-800">Sign Up</h2>
       <p className="text-gray-600 text-sm text-center">Create a new account</p>
@@ -97,7 +102,7 @@ export default function SignUp() {
 
         <button
           type="submit"
-          className="w-full p-2 mt-2 text-white bg-pink-900 rounded-lg hover:bg-blue-700 focus:ring-2 transition duration-300"
+          className="w-full p-2 mt-2 text-white bg-gray-900 rounded-lg hover:bg-gray-700 focus:ring-2 transition duration-300"
         >
           Sign Up
         </button>
@@ -108,5 +113,7 @@ export default function SignUp() {
       </p>
     </div>
   </div>
+    </div>
+   
   );
 }

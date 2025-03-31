@@ -105,9 +105,10 @@ const BillPage = () => {
     return <p className="text-center mt-10 text-gray-600">Loading bill...</p>;
 
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg">
+    <div className="bg-blue-100 h-full flex py-12">
+    <div className="max-w-5xl mx-auto p-6 bg-white shadow-lg rounded-lg">
       {/* Invoice Content (for display and PDF generation) */}
-      <div ref={invoiceRef} className="p-8">
+      <div ref={invoiceRef} className="p-8 py-4">
         <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">
           🧾 Invoice (Order #{orderId})
         </h2>
@@ -205,6 +206,7 @@ const BillPage = () => {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 };

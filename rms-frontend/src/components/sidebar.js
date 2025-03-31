@@ -21,7 +21,7 @@ const Sidebar = () => {
         setUser(storedUser);
       } else {
         toast.error("You are not signed in");
-        router.push("/signin");
+        router.push(`/signin`);
       }
     }
 
@@ -50,7 +50,7 @@ const Sidebar = () => {
   };
 
   return (
-    <aside className="w-[400px] bg-gradient-to-b   border-white from-gray-900 to-gray-800 text-white p-6 flex flex-col gap-8 min-h-screen shadow-xl ">
+    <aside className="w-[400px] bg-gradient-to-b  h-full border-white from-gray-900 to-gray-800 text-white p-6 flex flex-col gap-8 min-h-screen shadow-xl ">
       {/* User Info */}
       <div className="p-6 rounded-2xl bg-gray-700 shadow-lg animate-fade-in">
         <h2 className="text-3xl font-bold mb-3">👤 {name}</h2>
@@ -60,11 +60,17 @@ const Sidebar = () => {
       </div>
 
 <div>
-<p className="text-lg mt-2 border p-2 rounded-2xl">{getWorkStatus()}</p>
-<p className="text-sm mt-4 border p-3 rounded-2xl">⏰ {currentTime.toLocaleTimeString()}</p>
-</div>
+<p className="text-lg mt-2 bg-gray-700  shadow-2xl p-2 rounded-2xl">{getWorkStatus()}</p>
+<p className="text font-bold mt-4 bg-gray-700  shadow-2xl   p-3 rounded-2xl">⏰ {currentTime.toLocaleTimeString()}</p>
+<button
+        onClick={handleLogout}
+        className="mt-4 p-2 rounded-2xl w-full bg-red-500 hover:bg-red-600 transition-transform transform  font-semibold"
+      >
+        🚪 Logout
+      </button>
+      </div>
       {/* Navigation */}
-      <div>
+      {/* <div>
         <h2 className="text-2xl font-bold mb-4">{role === "manager" ? "" : "🛠️ Staff Panel"}</h2>
         <ul className="space-y-3">
           {role === "manager" ? (
@@ -80,13 +86,8 @@ const Sidebar = () => {
           )}
           
         </ul>
-      </div>
-      <button
-        onClick={handleLogout}
-        className="mt-auto p-3 rounded-lg bg-red-600 hover:bg-red-500 transition-transform transform hover:scale-105 font-semibold"
-      >
-        🚪 Logout
-      </button>
+      </div> */}
+    
       {/* Footer */}
       <div className="mt-auto text-center opacity-75">
         <p>✨ RMS Dashboard</p>

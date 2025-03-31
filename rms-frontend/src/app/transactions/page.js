@@ -33,49 +33,51 @@ const BillsPage = () => {
   if (loading) return <p className="text-center mt-10 text-gray-600">⏳ Loading bills...</p>;
 
   return (
-    <div className="max-w-6xl mx-auto p-8 bg-gray-100 min-h-screen">
-      <h1 className="text-3xl font-bold mb-8 text-center">📊 All Bills</h1>
-
-      {bills.length === 0 ? (
-        <p className="text-center text-gray-600">No bills available.</p>
-      ) : (
-        <table className="w-full border border-gray-300 rounded-lg shadow-md overflow-hidden">
-          <thead className="bg-gray-200">
-            <tr className="text-gray-700">
-              <th className="p-4 border">Bill ID</th>
-              <th className="p-4 border">Order ID</th>
-              <th className="p-4 border">Total Amount (₹)</th>
-              <th className="p-4 border">Status</th>
-              <th className="p-4 border">Actions</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {bills.map((bill) => (
-              <tr
-                key={bill.id}
-                className="text-gray-800 text-center hover:bg-gray-50 transition-colors"
+    <div className="mx-auto p-8 bg-blue-100 min-h-screen overflow-hidden rounded-2xl">
+    <h1 className="text-3xl font-bold text-center py-6 text-gray-800">Payments</h1>
+  
+    <div className="overflow-hidden rounded-2xl shadow-lg bg-white p-6">
+      
+      <table className="w-full border-collapse rounded-lg overflow-hidden shadow">
+        <thead>
+          <tr className="bg-blue-100 text-gray-700">
+            <th className="p-4 text-left">ID</th>
+            <th className="p-4 text-left">Order</th>
+            <th className="p-4 text-left">Total Amount</th>
+            <th className="p-4 text-left">Status</th>
+            <th className="p-4 text-left">Action</th>
+          </tr>
+        </thead>
+        <tbody className="divide-y divide-gray-200 bg-white">
+          {bills.map((bill) => (
+            <tr key={bill.id} className="hover:bg-gray-100 transition">
+              <td className="p-4">{bill.id}</td>
+              <td className="p-4">{bill.order}</td>
+              <td className="p-4 font-medium">₹{bill.total_amount}</td>
+              <td className="p-4 font-semibold">
+                {bill.is_paid ? (
+                  <span className="px-3 py-1 rounded-full text-green-700 bg-green-200 text-sm">
+                    Paid
+                  </span>
+                ) : (
+                  <span className="px-3 py-1 rounded-full text-red-700 bg-red-200 text-sm">
+                    Pending
+                  </span>
+                )}
+              </td>
+              <td
+                className="p-4 text-blue-500 font-semibold cursor-pointer hover:underline"
+                onClick={() => viewBillDetails(bill.order)}
               >
-                <td className="p-4 border">{bill.id}</td>
-                <td className="p-4 border">{bill.order}</td>
-                <td className="p-4 border font-semibold">₹{bill.total_amount}</td>
-                <td className={`p-4 border font-semibold ${bill.is_paid ? "text-green-600" : "text-red-600"}`}>
-                  {bill.is_paid ? "✅ Paid" : "❌ Unpaid"}
-                </td>
-                <td className="p-4 border">
-                  <button
-                    onClick={() => viewBillDetails(bill.order)}
-                    className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg"
-                  >
-                    📄 View Bill
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
+                View Bill
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
+  </div>
+  
   );
 };
 
