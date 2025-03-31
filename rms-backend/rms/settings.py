@@ -42,6 +42,12 @@ INSTALLED_APPS = [
     'core',  
 ]
 
+INSTALLED_APPS += ['django_filters']
+
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+}
+
 
 # REST_FRAMEWORK = {
 #     'DEFAULT_AUTHENTICATION_CLASSES': [
@@ -116,6 +122,12 @@ DATABASES = {
         'PORT': '5432',
     }
 }
+
+import os
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 
 
 # Password validation

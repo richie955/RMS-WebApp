@@ -1,10 +1,13 @@
 "use client";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 
+ 
 
 export default function SignUp() {
+
+
   const router = useRouter();
   const [form, setForm] = useState({
     name: "",
@@ -15,6 +18,7 @@ export default function SignUp() {
     shift: "morning",
   });
 
+  
   const handleSubmit = async (e) => {
     
     console.log(form);
@@ -39,65 +43,70 @@ export default function SignUp() {
 
 
   return (
-    <div className="max-w-sm mx-auto mt-10 p-4">
-      <h1 className="text-xl mb-4 font-semibold">Sign Up</h1>
-      <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-        <input
-          type="text"
-          placeholder="Name"
-          value={form.name}
-          onChange={(e) => setForm({ ...form, name: e.target.value })}
-          required
-          className="p-2 border rounded placeholder-gray-600"
-        />
-         <input
-          type="text"
-          placeholder="Username"
-          value={form.username}
-          onChange={(e) => setForm({ ...form, username: e.target.value })}
-          required
-          className="p-2 border rounded placeholder-gray-600"
-        />
-        <input
-          type="email"
-          placeholder="Email"
-          value={form.email}
-          onChange={(e) => setForm({ ...form, email: e.target.value })}
-          required
-          className="p-2 border rounded placeholder-gray-600"
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={form.password}
-          onChange={(e) => setForm({ ...form, password: e.target.value })}
-          required
-          className="p-2 border rounded placeholder-gray-600"
-        />
-        <select
-          value={form.role}
-          onChange={(e) => setForm({ ...form, role: e.target.value })}
-          className="p-2 border rounded"
+    <div className="flex items-center  justify-center min-h-screen bg-gradient-to-br from-purple-500 via-pink-200 to-blue-300">
+    <div className="w-full max-w-sm p-6 space-y-5 bg-white rounded-3xl shadow-xl border border-gray-200">
+      <h2 className="text-3xl font-bold text-center text-gray-800">Sign Up</h2>
+      <p className="text-gray-600 text-sm text-center">Create a new account</p>
+
+      <form onSubmit={handleSubmit} className="space-y-3">
+        {[
+          { label: "Name", type: "text", field: "name" },
+          { label: "Username", type: "text", field: "username" },
+          { label: "Email", type: "email", field: "email" },
+          { label: "Password", type: "password", field: "password" },
+        ].map(({ label, type, field }) => (
+          <div key={field}>
+            <label className="block text-sm font-medium text-gray-700">{label}</label>
+            <input
+              type={type}
+              className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 outline-none"
+              placeholder={`Enter ${label.toLowerCase()}`}
+              value={form[field]}
+              onChange={(e) => setForm({ ...form, [field]: e.target.value })}
+              required
+            />
+          </div>
+        ))}
+
+        <div className="grid grid-cols-2 gap-3">
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Role</label>
+            <select
+              className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 outline-none"
+              value={form.role}
+              onChange={(e) => setForm({ ...form, role: e.target.value })}
+            >
+              <option value="manager">Manager</option>
+              <option value="waiter">Waiter</option>
+              <option value="cook">Cook</option>
+            </select>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Shift</label>
+            <select
+              className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 outline-none"
+              value={form.shift}
+              onChange={(e) => setForm({ ...form, shift: e.target.value })}
+            >
+              <option value="morning">Morning</option>
+              <option value="evening">Evening</option>
+            </select>
+          </div>
+        </div>
+
+        <button
+          type="submit"
+          className="w-full p-2 mt-2 text-white bg-pink-900 rounded-lg hover:bg-blue-700 focus:ring-2 transition duration-300"
         >
-          <option value="manager">Manager</option>
-          <option value="waiter">Waiter</option>
-          <option value="cook">Cook</option>
-        </select>
-        <select
-          value={form.shift}
-          onChange={(e) => setForm({ ...form, shift: e.target.value })}
-          className="p-2 border rounded"
-        >
-          <option value="morning">Morning</option>
-          <option value="evening">Evening</option>
-        </select>
-        <button type="submit" className="bg-blue-500 text-white p-2 rounded text-sm">
           Sign Up
         </button>
       </form>
-      <p className="mt-3 text-sm">
-        Already have an account? <a href="/signin" className="text-blue-500">Sign In</a>
+
+      <p className="text-sm text-center text-gray-600">
+        Already have an account? <a href="/signin" className="text-blue-500 hover:underline">Sign In</a>
       </p>
     </div>
+  </div>
   );
 }

@@ -19,8 +19,7 @@ class TableAdmin(admin.ModelAdmin):
 class OrderAdmin(admin.ModelAdmin):
     list_display = ('id', 'status', 'created_at')
     search_fields = ('status',)
-    list_filter = ('status', 'created_at')
-    filter_horizontal = ('menu_items', 'tables')  
+    list_filter = ('status', 'created_at') 
 
 @admin.register(Bill)
 class BillAdmin(admin.ModelAdmin):
