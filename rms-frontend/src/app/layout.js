@@ -35,7 +35,8 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased flex  bg-gray-900`}
+        className={` antialiased flex   bg-gray-900`}
+        style={{ fontFamily: "'Jakarta', sans-serif" }}
       >
         {loading ? (
           <Spinner />
@@ -44,7 +45,10 @@ export default function RootLayout({ children }) {
             {showSidebar && <Sidebar />}
             <div className="w-full h-[100vh]">
               <nav className="bg-gray-900 text-white p-4 h-[10%] flex justify-between items-center">
-                <h1 className="text-2xl font-bold">Restaurant Management System</h1>
+              <h1  className="text-2xl font-bold">
+  Restaurant Management System
+</h1>
+
                 <ul className="flex gap-6">
                   <li>
                     <a href="/" className="hover:underline">

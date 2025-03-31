@@ -108,7 +108,7 @@ class OrderSerializer(serializers.ModelSerializer):
 class BillSerializer(serializers.ModelSerializer):
     class Meta:
         model = Bill
-        fields = ["id", "order", "total_amount", "is_paid"]
+        fields = '__all__'
         
     
 class TransactionHistorySerializer(serializers.ModelSerializer):

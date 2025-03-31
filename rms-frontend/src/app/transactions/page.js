@@ -21,6 +21,19 @@ const BillsPage = () => {
     }
   };
 
+  const formatDateTime = (isoString) => {
+    const date = new Date(isoString);
+    return date.toLocaleString("en-US", {
+      year: "numeric",
+      month: "long", // "short" for "Mar", "2-digit" for "03"
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true, // `false` for 24-hour format
+    });
+  };
+  
+
   useEffect(() => {
     fetchBills();
   }, []);
@@ -44,7 +57,7 @@ const BillsPage = () => {
             <th className="p-4 text-left">ID</th>
             <th className="p-4 text-left">Order</th>
             <th className="p-4 text-left">Total Amount</th>
-            <th className="p-4 text-left">Status</th>
+            <th className="p-4 text-left">Date</th>
             <th className="p-4 text-left">Action</th>
           </tr>
         </thead>
@@ -55,15 +68,11 @@ const BillsPage = () => {
               <td className="p-4">{bill.order}</td>
               <td className="p-4 font-medium">₹{bill.total_amount}</td>
               <td className="p-4 font-semibold">
-                {bill.is_paid ? (
+               
                   <span className="px-3 py-1 rounded-full text-green-700 bg-green-200 text-sm">
-                    Paid
+                 {formatDateTime(bill.generated_at)}
                   </span>
-                ) : (
-                  <span className="px-3 py-1 rounded-full text-red-700 bg-red-200 text-sm">
-                    Pending
-                  </span>
-                )}
+            
               </td>
               <td
                 className="p-4 text-blue-500 font-semibold cursor-pointer hover:underline"

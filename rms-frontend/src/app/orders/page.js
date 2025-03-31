@@ -142,7 +142,7 @@ const OrderPage = () => {
       {orders.length === 0 ? (
         <p className="text-center text-gray-700 text-lg">No orders available.</p>
       ) : (
-        <div className="flex flex-wrap justify-between gap-y-10 gap-6">
+        <div className="flex flex-wrap justify-start gap-y-10 gap-6">
           {orders.map((order) => (
             <OrderCard
               key={order.id}
