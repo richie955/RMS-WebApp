@@ -31,71 +31,67 @@ const EmployeeCard = ({ id, name, email, role, shift, onUpdate }) => {
   };
 
   return (
-    <div className="p-4 rounded-lg shadow-md bg-gray-100 text-center">
-      <h3 className="mt-4 text-lg font-semibold">{name}</h3>
-      <p className="text-gray-600">{email}</p>
+    <div className="flex flex-col items-center p-5 bg-gray-800 border border-gray-700 rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 w-64">
+    <h3 className="mt-4 text-lg font-semibold text-white">{name}</h3>
+    <p className="text-sm text-white mb-4">{email}</p>
 
-      {editMode ? (
-        <div className="mt-4">
-          {/* Role Dropdown */}
-          <select
-            value={updatedRole}
-            onChange={(e) => setUpdatedRole(e.target.value)}
-            className="p-2 border rounded w-full mb-2"
-          >
-            {ROLE_CHOICES.map((choice) => (
-              <option key={choice.value} value={choice.value}>
-                {choice.label}
-              </option>
-            ))}
-          </select>
+    {editMode ? (
+      <div className="mt-4 w-full">
+        {/* Role Dropdown */}
+        <select
+          value={updatedRole}
+          onChange={(e) => setUpdatedRole(e.target.value)}
+          className="p-2 border rounded w-full mb-2 text-gray-900"
+        >
+          {ROLE_CHOICES.map((choice) => (
+            <option key={choice.value} value={choice.value}>
+              {choice.label}
+            </option>
+          ))}
+        </select>
 
-          {/* Shift Dropdown */}
-          <select
-            value={updatedShift}
-            onChange={(e) => setUpdatedShift(e.target.value)}
-            className="p-2 border rounded w-full"
-          >
-            {SHIFT_CHOICES.map((choice) => (
-              <option key={choice.value} value={choice.value}>
-                {choice.label}
-              </option>
-            ))}
-          </select>
+        {/* Shift Dropdown */}
+        <select
+          value={updatedShift}
+          onChange={(e) => setUpdatedShift(e.target.value)}
+          className="p-2 border rounded w-full mb-2 text-gray-900"
+        >
+          {SHIFT_CHOICES.map((choice) => (
+            <option key={choice.value} value={choice.value}>
+              {choice.label}
+            </option>
+          ))}
+        </select>
 
-          {/* Save Button */}
-          <button
-            onClick={handleUpdate}
-            className="mt-2 bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
-          >
-            Save
-          </button>
+        {/* Save Button */}
+        <button
+          onClick={handleUpdate}
+          className="mt-2 bg-white text-gray-800 p-2 rounded hover:bg-gray-200 transition-all duration-300 w-full"
+        >
+          Save
+        </button>
 
-          {/* Cancel Button */}
-          <button
-            onClick={() => setEditMode(false)}
-            className="mt-2 ml-2 bg-gray-500 text-white p-2 rounded hover:bg-gray-600"
-          >
-            Cancel
-          </button>
-        </div>
-      ) : (
-        <>
-          <p className="text-gray-700">
-            {ROLE_CHOICES.find((r) => r.value === role)?.label}
-          </p>
-          <p className="text-gray-700">
-            {SHIFT_CHOICES.find((s) => s.value === shift)?.label} shift
-          </p>
-          <button
-            onClick={() => setEditMode(true)}
-            className="mt-2 bg-yellow-500 text-white p-2 rounded hover:bg-yellow-600"
-          >
-            Edit
-          </button>
-        </>
-      )}
-    </div>
+        {/* Cancel Button */}
+        <button
+          onClick={() => setEditMode(false)}
+          className="mt-2 ml-2 bg-white text-gray-800 p-2 rounded hover:bg-gray-200 transition-all duration-300 w-full"
+        >
+          Cancel
+        </button>
+      </div>
+    ) : (
+      <>
+        <p className="text-sm text-white">{updatedRole}</p>
+        <p className="text-sm text-white">{updatedShift} shift</p>
+        <button
+          onClick={() => setEditMode(true)}
+          className="mt-4 bg-white text-gray-800 p-2 rounded-3xl hover:bg-gray-200 transition-all duration-300 w-full"
+        >
+          Edit
+        </button>
+      </>
+    )}
+  </div>
   );
 };
 

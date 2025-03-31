@@ -1,6 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { FaBoxOpen } from "react-icons/fa";
+import Link from "next/link";
+
 
 export default function MenuPage() {
   const [menuItems, setMenuItems] = useState({});
@@ -33,30 +36,41 @@ export default function MenuPage() {
 
 
   return (
-    <div className="p-6 mx-auto bg-[#F5DEB3] min-h-screen">
-      <h1 className="text-3xl font-bold text-center mb-6 text-[#8B4513]">Menu</h1>
+    <div className="p-6 mx-auto bg-gray-100 min-h-screen rounded-tl-3xl">
+       <div className="flex justify-between">
+    <h1 className="text-3xl font-bold text-center py-6 text-gray-800 flex items-center gap-3 justify-center">
+      <FaBoxOpen className="text-gray-800" /> Menu
+    </h1>
+    <Link
+  href="/menu/add"
+  className="bg-gray-900 hover:bg-gray-800 text-white px-6 py-3 h-fit mt-5 text-sm rounded-lg shadow-lg font-medium transition-all duration-300"
+>
+  ➕ Add Items
+</Link>
+
+        </div>
 
       {Object.keys(menuItems).length === 0 ? (
-        <p className="text-center text-[#8B4513]">Loading menu...</p>
+        <p className="text-center ">Loading menu...</p>
       ) : (
         Object.entries(menuItems).map(([category, items]) => (
           <div key={category} className="mb-8">
-            <h2 className="text-xl font-semibold bg-[#8b4513] text-[#F5DEB3] p-3 rounded-2xl">
+            <h2 className="text-xl font-bold bg-gray-800 text-white  p-3 rounded-2xl">
               {category.toUpperCase()}
             </h2>
 
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 mt-3">
               {items.map((item) => (
-                <div key={item.id} className="rounded-2xl shadow-md flex flex-col items-center bg-[#FFE4C4]">
+                <div key={item.id} className="rounded-2xl shadow-md flex flex-col items-center bg-white">
                   <img
                     src={item.menuitem_image || "https://via.placeholder.com/300"}
                     alt={item.name}
                     className="w-full h-44 object-cover rounded-t-xl"
                   />
-                  <div className="flex flex-row p-3 gap-2 items-center">
-                    <div className="text-center text-[#aa5518] font-semibold">{item.name}</div>
-                    <div className="font-bold border rounded-3xl p-2 px-3 h-fit w-fit">₹{item.price}</div>
-                  </div>
+            
+                    <div className="text-center ] font-semibold mt-3">{item.name}</div>
+                    <div className="font-bold border my-2 px-2 p-1 rounded bg-gray-900 text-white b-3 h-fit w-fit">₹{item.price}</div>
+                  
                   {/* <button
                     className="bg-[#8B4513] text-white px-3 py-1 font-bold rounded-b-xl w-full hover:bg-[#A0522D] mt-2"
                 
