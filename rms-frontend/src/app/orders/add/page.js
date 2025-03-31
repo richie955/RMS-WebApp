@@ -111,7 +111,7 @@ const AddOrderPage = () => {
         className="w-full l bg-white p-6 rounded-xl shadow-lg mt-6"
       >
         <h2 className="text-xl font-semibold mb-4">Select Menu Items:</h2>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-4 gap-4">
           {menuItems.map((item) => (
             <motion.div
               key={item.id}
@@ -128,7 +128,7 @@ const AddOrderPage = () => {
                 className="h-5 w-5 text-red-600"
               />
               <span className="ml-3">
-                {item.name} (₹{item.price})
+                {item.name} - ₹{item.price}
               </span>
               {selectedMenuItems.find((i) => i.menu_item === item.id) && (
                 <input
@@ -149,7 +149,7 @@ const AddOrderPage = () => {
         </div>
 
         <h2 className="text-xl font-semibold mt-6 mb-4">Select Tables:</h2>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-4 gap-4">
           {tables.map((table) => (
             <motion.label
               key={table.id}
@@ -164,7 +164,7 @@ const AddOrderPage = () => {
                 className="h-5 w-5 text-green-600"
               />
               <span className="ml-3 flex items-center gap-1">
-                <FaChair /> Table #{table.id} (Capacity: {table.capacity})
+                <FaChair /> Table {table.id} (Capacity: {table.capacity})
               </span>
             </motion.label>
           ))}

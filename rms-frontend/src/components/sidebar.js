@@ -53,14 +53,14 @@ const Sidebar = () => {
     <aside className="w-[400px] bg-gradient-to-b  h-full border-white from-gray-900 to-gray-800 text-white p-6 flex flex-col gap-8 min-h-screen shadow-xl ">
       {/* User Info */}
       <div className="p-6 rounded-2xl bg-gray-700 shadow-lg animate-fade-in">
-        <h2 className="text-3xl font-bold mb-3">👤 {name}</h2>
-        <p className="text-lg">Role: <span className="font-semibold">{role}</span></p>
+        <h2 className="text-xl font-bold mb-3"> {name}</h2>
+        <p className="text-lg">Role: <span className="font-semibold">{role.toUpperCase()}</span></p>
         <p className="text-lg">Shift: <span className="font-semibold">{shift.charAt(0).toUpperCase() + shift.slice(1)}</span></p>
    
       </div>
 
 <div>
-<p className="text-lg mt-2 bg-gray-700  shadow-2xl p-2 rounded-2xl">{getWorkStatus()}</p>
+<p className="text-lg mt-2 bg-gray-700  shadow-2xl font-bold p-2 rounded-2xl">{getWorkStatus()}</p>
 <p className="text font-bold mt-4 bg-gray-700  shadow-2xl   p-3 rounded-2xl">⏰ {currentTime.toLocaleTimeString()}</p>
 <button
         onClick={handleLogout}

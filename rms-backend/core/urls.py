@@ -8,12 +8,12 @@ from .views import SignUpView, SignInView
 router = DefaultRouter()
 router.register(r'users', UserViewSet)
 router.register(r'menuitems', MenuItemViewSet)
-router.register(r'tables', TableViewSet)
+router.register(r'tables', TableViewSet, basename='tables')
 router.register(r'orders', OrderViewSet)
 router.register(r'bills', BillViewSet)
 router.register(r'transactions', TransactionHistoryViewSet)
-router.register(r'inventory', InventoryItemViewSet)
-router.register(r'orderitems', OrderItemViewSet)
+router.register(r'inventory', InventoryItemViewSet, basename='inventoryitem')
+router.register(r'orderitems', OrderItemViewSet ,basename="orderitem")
 
 
 urlpatterns = [

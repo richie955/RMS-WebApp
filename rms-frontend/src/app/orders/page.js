@@ -14,8 +14,8 @@ const OrderCard = ({ order, onUpdateStatus, onGenerateBill }) => {
   };
 
   return (
-    <div className="p-4 bg-white rounded-3xl shadow-md hover:shadow-lg transition-shadow duration-300">
-      <h3 className="text-xl font-bold text-gray-800 mb-2">Order {id}</h3>
+    <div className="p-4 bg-white w-[350px] text-sm rounded-3xl shadow-md hover:shadow-lg transition-shadow duration-300">
+      <h3 className="text-lg font-bold text-gray-800 mb-2">Order {id}</h3>
 
       <p className="text-gray-600">
         <span className="font-semibold">Status:</span> {status}
@@ -27,7 +27,7 @@ const OrderCard = ({ order, onUpdateStatus, onGenerateBill }) => {
       </p>
 
       {/* Display Menu Items with Quantities */}
-      <p className="text-gray-600 mt-2">
+      <p className="text-gray-600 mt-2 ">
         <span className="font-semibold">Menu Items:</span>{" "}
         {order_items.length > 0
           ? order_items
@@ -128,7 +128,7 @@ const OrderPage = () => {
 
   return (
     <div className="min-h-screen flex rounded-tl-3xl  justify-center items-center  bg-blue-200  px-8 p-4 pt-0">
-    <div className="w-full  border-gray-300 -mt-12">
+    <div className="w-full  border-gray-300 mt-6">
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-4xl font-bold text-gray-800">🍽 Order Management</h1>
         <button
@@ -142,7 +142,7 @@ const OrderPage = () => {
       {orders.length === 0 ? (
         <p className="text-center text-gray-700 text-lg">No orders available.</p>
       ) : (
-        <div className="flex flex-wrap justify-start gap-y-10 gap-6">
+        <div className="flex flex-wrap justify-start mx-auto gap-y-10 gap-6">
           {orders.map((order) => (
             <OrderCard
               key={order.id}

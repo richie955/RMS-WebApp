@@ -31,66 +31,67 @@ const EmployeeCard = ({ id, name, email, role, shift, onUpdate }) => {
   };
 
   return (
-    <div className="flex flex-col items-center p-5 bg-gray-800 border border-gray-700 rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 w-64">
+    <div className="flex flex-col text-sm fo items-center p-5 bg-gray-800  rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 w-64">
     <h3 className="mt-4 text-lg font-semibold text-white">{name}</h3>
     <p className="text-sm text-white mb-4">{email}</p>
 
     {editMode ? (
-      <div className="mt-4 w-full">
-        {/* Role Dropdown */}
-        <select
-          value={updatedRole}
-          onChange={(e) => setUpdatedRole(e.target.value)}
-          className="p-2 border rounded w-full mb-2 text-gray-900"
-        >
-          {ROLE_CHOICES.map((choice) => (
-            <option key={choice.value} value={choice.value}>
-              {choice.label}
-            </option>
-          ))}
-        </select>
+  <div className="mt-4 w-full flex flex-col">
+    {/* Role Dropdown */}
+    <select
+      value={updatedRole}
+      onChange={(e) => setUpdatedRole(e.target.value)}
+      className="p-2  rounded-xl w-full mb-2 bg-white text-black"
+    >
+      {ROLE_CHOICES.map((choice) => (
+        <option key={choice.value} value={choice.value}>
+          {choice.label}
+        </option>
+      ))}
+    </select>
 
-        {/* Shift Dropdown */}
-        <select
-          value={updatedShift}
-          onChange={(e) => setUpdatedShift(e.target.value)}
-          className="p-2 border rounded w-full mb-2 text-gray-900"
-        >
-          {SHIFT_CHOICES.map((choice) => (
-            <option key={choice.value} value={choice.value}>
-              {choice.label}
-            </option>
-          ))}
-        </select>
+    {/* Shift Dropdown */}
+    <select
+      value={updatedShift}
+      onChange={(e) => setUpdatedShift(e.target.value)}
+      className="p-2  rounded-xl  w-full mb-2 bg-white text-black"
+    >
+      {SHIFT_CHOICES.map((choice) => (
+        <option key={choice.value} value={choice.value}>
+          {choice.label}
+        </option>
+      ))}
+    </select>
 
-        {/* Save Button */}
-        <button
-          onClick={handleUpdate}
-          className="mt-2 bg-white text-gray-800 p-2 rounded hover:bg-gray-200 transition-all duration-300 w-full"
-        >
-          Save
-        </button>
-
-        {/* Cancel Button */}
-        <button
-          onClick={() => setEditMode(false)}
-          className="mt-2 ml-2 bg-white text-gray-800 p-2 rounded hover:bg-gray-200 transition-all duration-300 w-full"
-        >
-          Cancel
-        </button>
-      </div>
-    ) : (
-      <>
-        <p className="text-sm text-white">{updatedRole}</p>
-        <p className="text-sm text-white">{updatedShift} shift</p>
-        <button
-          onClick={() => setEditMode(true)}
-          className="mt-4 bg-white text-gray-800 p-2 rounded-3xl hover:bg-gray-200 transition-all duration-300 w-full"
-        >
-          Edit
-        </button>
-      </>
-    )}
+    {/* Buttons Container */}
+    <div className="mt-4 flex flex-col gap-2">
+      <button
+        onClick={handleUpdate}
+        className="bg-white text-black p-2 rounded-2xl hover:bg-gray-200 transition-all duration-300 w-full "
+      >
+        Save
+      </button>
+      <button
+        onClick={() => setEditMode(false)}
+        className="bg-white text-black p-2 rounded-2xl hover:bg-gray-200 transition-all duration-300 w-full "
+      >
+        Cancel
+      </button>
+    </div>
+  </div>
+) : (
+  <>
+    <p className="text-sm text-white font-bold">{updatedRole.toUpperCase()}</p>
+    <p className="text-sm text-white font-bold">{updatedShift} shift</p>
+    <button
+      onClick={() => setEditMode(true)}
+      className="mt-4 bg-white text-black p-2 rounded-3xl hover:bg-gray-200 transition-all duration-300 w-full "
+    >
+      Edit
+    </button>
+  </>
+)
+}
   </div>
   );
 };

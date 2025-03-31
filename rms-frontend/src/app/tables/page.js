@@ -42,7 +42,7 @@ const TableReservation = () => {
   return (
     <div className="flex justify-center  rounded-tl-3xl px-8 items-center min-h-screen bg-blue-100 ">
       <div className="w-full  rounded-2xl  border-gray-700">
-        <h1 className="text-3xl font-bold text-center mb-6 -mt-10  ">
+        <h1 className="text-3xl font-bold  mb-6 -mt-10  ">
           🍽 Table Reservations
         </h1>
 
@@ -58,7 +58,7 @@ const TableReservation = () => {
               <h2 className="text-xl font-semibold  mb-3">
                 Available Tables
               </h2>
-              <div className="space-y-3 flex flex-wrap gap-6">
+              <div className="flex flex-wrap gap-6">
                 {tables
                   .filter((table) => !table.reserved)
                   .map((table) => (
@@ -78,7 +78,7 @@ const TableReservation = () => {
               <h2 className="text-xl font-semibold  mb-3">
                 Reserved Tables
               </h2>
-              <div className="space-y-3 flex">
+              <div className="flex flex-wrap gap-6">
                 {tables
                   .filter((table) => table.reserved)
                   .map((table) => (
